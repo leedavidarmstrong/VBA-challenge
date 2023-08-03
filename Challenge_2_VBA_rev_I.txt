@@ -1,0 +1,310 @@
+'Challenge_2_VBA
+'--------------------
+'Create a loop, ticker, yeaarly change in price, percentage change in price, total stock volume.
+	'just create a loop through all worksheets for everything from the beginning, is it possible? 
+'highlight positive and negative with color for column yearly change. 
+	'do not use normal excel, remeber everything to be done in developer.
+'check image on challenge against results. 
+'Bonus stuff is always mandatory.
+'check image and replicate for percentages of increase and decrease and include total volume.
+	'tickers and values.
+'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub Multiple_year_stock_data()
+
+'Sub alphabetical_testing()
+'Named sub for challenge file ? Use on alphabetical testing file will work ?
+
+'Create an overal loop for all sheets to encompase all code ?
+
+'Dim WS As Worksheet
+    'For Each WS In ActiveWorkbook.Worksheets
+    'WS.Activate
+        'Use lastrow instead of cell row number ?
+        'LastRow = WS.Cells(Rows.Count, 1).End(xlUp).Row
+'delete coment later, x1Up should be xlUp ?
+
+'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+'Add in named Variables
+'Add in Columns
+
+Sub Multiple_year_stock_data()
+
+'Sub alphabetical_testing()
+'Named sub for challenge file ? Use on alphabetical testing file will work ?
+
+'Create an overal loop for all sheets to encompase all code ?
+
+Dim WS As Worksheet
+    For Each WS In ActiveWorkbook.Worksheets
+    WS.Activate
+        'Use lastrow instead of cell row number ?
+        LastRow = WS.Cells(Rows.Count, 1).End(xlUp).Row
+'delete coment later, x1Up should be xlUp ?
+
+	'set variables strings, doubles, longs, values?
+	Dim Open_Price As Double
+	Dim i As Long
+	Dim Column As Integer
+	Dim Row As Double
+	Dim Ticker_Name As String
+	Dim Close_Price As Double
+	Dim Yearly_Change As Double
+	Dim Percent_Change As Double
+	Dim Volume As Double
+
+'values for dims?
+		'Set the opening prices
+        	Open_Price = Cells(2, Column + 2).Value
+		Row = 2
+		Column = 1
+		Volume = 0
+
+'Create new named columns ?
+   Cells(1, "I" & "P").Value = "Ticker"
+        Cells(1, "J").Value = "Yearly Change"
+        Cells(1, "K").Value = "Percent Change"
+        Cells(1, "L").Value = "Total Stock Volume"
+        ''Cells(1, "P").Value = "Ticker"
+        Cells(1, "Q").Value = "Value"
+        Cells(2, "O").Value = "Greatest % Increase"
+        Cells(3, "O").Value = "Greatest % Decrease"
+        Cells(4, "O").Value = "Greatest Total Volume"
+
+
+'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+'use solved code from class and in class examples then use debugger and step through using F8 as build code.
+
+
+
+
+'mostly using youtube to piece together chosen code and fix bugs.
+'delete comments, make sure everything is collecting from all worksheets ?
+'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+'highlight positive and negative with color for column percent change. 
+'added this code to color second coloumn
+
+    'last row for each worksheet
+      PCLastRow = WS.Cells(Rows.Count, "J").End(xlUp).Row
+   For i = 2 To PCLastRow
+            If (Cells(i, "K").Value > 0 Or Cells(i, "K").Value = 0) Then
+                Cells(i, "K").Interior.ColorIndex = 4
+            ElseIf Cells(i, "K").Value < 0 Then
+                Cells(i, "K").Interior.ColorIndex = 3
+            End If
+        Next i
+
+'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub Multiple_year_stock_data()
+
+'Sub alphabetical_testing()
+'Named sub for challenge file ? Use on alphabetical testing file will work ?
+
+'Create an overal loop for all sheets to encompase all code ? See/Use Census ptII
+
+Dim WS As Worksheet
+    For Each WS In ActiveWorkbook.Worksheets
+    WS.Activate
+        'Use lastrow instead of cell row number ?
+        ' Determine the Last Row
+        'LastRow = WS.Cells(Rows.Count, 1).End(xlUp).Row
+        LastRow = WS.Cells(Rows.Count, 1).End(xlUp).Row
+'delete coment later, x1Up should be xlUp ?
+
+	'set variables strings, doubles, longs, values?
+	Dim Open_Price As Double
+	Dim i As Long
+	Dim Column As Integer
+	Dim Row As Double
+	Dim Ticker_Name As String
+	Dim Close_Price As Double
+	Dim Yearly_Change As Double
+	Dim Percent_Change As Double
+	Dim Volume As Double
+
+'values for dims?
+        Row = 2
+        Column = 1
+        Volume = 0
+
+'Create new named columns ?
+        Cells(1, "I").Value = "Ticker"
+        Cells(1, "J").Value = "Yearly Change"
+        Cells(1, "K").Value = "Percent Change"
+        Cells(1, "L").Value = "Total Stock Volume"
+        Cells(1, "P").Value = "Ticker"
+        Cells(1, "Q").Value = "Value"
+        Cells(2, "O").Value = "Greatest % Increase"
+        Cells(3, "O").Value = "Greatest % Decrease"
+        Cells(4, "O").Value = "Greatest Total Volume"
+
+'delete comments, make sure everything is all worksheets ? 
+
+
+        'using cryptokennel and starcounter and nextcells and credit card exercises then modifiy with youtube help.
+'delete comments later remember to identify the end of the tickers and dont loop them all together
+	'gather prices and changes for open close yeasr
+'Set the opening prices
+        Open_Price = Cells(2, Column + 2).Value
+        
+        For i = 2 To LastRow
+            If Cells(i + 1, Column).Value <> Cells(i, Column).Value Then
+                Ticker_Name = Cells(i, Column).Value
+                    Cells(Row, Column + 8).Value = Ticker_Name
+                Close_Price = Cells(i, Column + 5).Value
+                Yearly_Change = Close_Price - Open_Price
+                    Cells(Row, Column + 9).Value = Yearly_Change
+                If (Open_Price = 0 And Close_Price = 0) Then
+                    Percent_Change = 0
+                    ElseIf (Open_Price = 0 And Close_Price <> 0) Then
+                        Percent_Change = 1
+                        Else
+                            Percent_Change = Yearly_Change / Open_Price
+                            Cells(Row, Column + 10).Value = Percent_Change
+                            Cells(Row, Column + 10).NumberFormat = "0.00%"
+                    End If
+                Volume = Volume + Cells(i, Column + 6).Value
+                        Cells(Row, Column + 11).Value = Volume
+                Row = Row + 1
+                Open_Price = Cells(i + 1, Column + 2)
+                Volume = 0
+                Else
+        Volume = Volume + Cells(i, Column + 6).Value
+            End If
+        Next i
+'budget checker and for loop exercise?
+'go through all rows to find them and identify. use census exercises and modify with youtube tutorials.
+            YCLastRow = WS.Cells(Rows.Count, Column + 8).End(xlUp).Row
+        For i = 2 To YCLastRow
+            If Cells(i, "K").Value = Application.WorksheetFunction.Max(WS.Range("K2:K" & YCLastRow)) Then
+                Cells(2, Column + 15).Value = Cells(i, "I").Value
+                Cells(2, Column + 16).Value = Cells(i, "K").Value
+                Cells(2, Column + 16).NumberFormat = "0.00%"
+            ElseIf Cells(i, "K").Value = Application.WorksheetFunction.Min(WS.Range("K2:K" & YCLastRow)) Then
+                Cells(3, Column + 15).Value = Cells(i, "I").Value
+                Cells(3, Column + 16).Value = Cells(i, "K").Value
+                Cells(3, Column + 16).NumberFormat = "0.00%"
+            ElseIf Cells(i, Column + 11).Value = Application.WorksheetFunction.Max(WS.Range("L2:L" & YCLastRow)) Then
+                Cells(4, Column + 15).Value = Cells(i, "I").Value
+                Cells(4, Column + 16).Value = Cells(i, Column + 11).Value
+            End If
+        Next i
+'delete comment youtbe and google to see if can combine and clean up
+        'make sure everything is still in the worksheet loop
+
+'delete comment figure out how to get both columns color red and green ?
+'red for negative green for plus values. used checkerboard and reset button and in class example and youtube help.
+        
+    PCLastRow = WS.Cells(Rows.Count, "J").End(xlUp).Row
+        For i = 2 To PCLastRow
+            If (Cells(i, Column + 9).Value > 0 Or Cells(i, Column + 9).Value = 0) Then
+                Cells(i, Column + 9).Interior.ColorIndex = 4
+            ElseIf Cells(i, Column + 9).Value < 0 Then
+                Cells(i, Column + 9).Interior.ColorIndex = 3
+            End If
+        Next i
+'cant figure out how to incorporate into one code string so copy and pasted.
+        For i = 2 To PCLastRow
+            If (Cells(i, "K").Value > 0 Or Cells(i, "K").Value = 0) Then
+                Cells(i, "K").Interior.ColorIndex = 4
+            ElseIf Cells(i, "K").Value < 0 Then
+                Cells(i, "K").Interior.ColorIndex = 3
+            End If
+        Next i
+    Next WS
+End Sub
+
+'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+'accidentally removed this line while trying to clean up code and had a panic attack lol!
+'Volume = Volume + Cells(i, Column + 6).Value
+
+'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub Multiple_year_stock_data()
+    Dim WS As Worksheet
+        For Each WS In ActiveWorkbook.Worksheets
+            WS.Activate
+                LastRow = WS.Cells(Rows.Count, 1).End(xlUp).Row
+                    Dim Open_Price As Double
+                    Dim i As Long
+                    Dim Column As Integer
+                    Dim Row As Double
+                    Dim Ticker_Name As String
+                    Dim Close_Price As Double
+                    Dim Yearly_Change As Double
+                    Dim Percent_Change As Double
+                    Dim Volume As Double
+                        Row = 2
+                        Column = 1
+                        Volume = 0
+                    Cells(1, "I").Value = "Ticker"
+                    Cells(1, "J").Value = "Yearly Change"
+                    Cells(1, "K").Value = "Percent Change"
+                    Cells(1, "L").Value = "Total Stock Volume"
+                    Cells(1, "Q").Value = "Value"
+                    Cells(1, "P").Value = "Ticker"
+                    Cells(2, "O").Value = "Greatest % Increase"
+                    Cells(3, "O").Value = "Greatest % Decrease"
+                    Cells(4, "O").Value = "Greatest Total Volume"
+                    
+                    Open_Price = Cells(2, Column + 2).Value
+                For i = 2 To LastRow
+                    If Cells(i + 1, Column).Value <> Cells(i, Column).Value Then
+                        Ticker_Name = Cells(i, Column).Value
+                        Cells(Row, Column + 8).Value = Ticker_Name
+                        Close_Price = Cells(i, Column + 5).Value
+                        Yearly_Change = Close_Price - Open_Price
+                        Cells(Row, Column + 9).Value = Yearly_Change
+                    If (Open_Price = 0 And Close_Price = 0) Then
+                        Percent_Change = 0
+                    ElseIf (Open_Price = 0 And Close_Price <> 0) Then
+                        Percent_Change = 1
+                        Else
+                            Percent_Change = Yearly_Change / Open_Price
+                            Cells(Row, Column + 10).Value = Percent_Change
+                            Cells(Row, Column + 10).NumberFormat = "0.00%"
+                    End If
+                    Volume = Volume + Cells(i, Column + 6).Value
+                        Cells(Row, Column + 11).Value = Volume
+                    Row = Row + 1
+                    Open_Price = Cells(i + 1, Column + 2)
+                    Volume = 0
+                    Else
+                    Volume = Volume + Cells(i, Column + 6).Value
+                    End If
+                Next i
+                    YCLastRow = WS.Cells(Rows.Count, Column + 8).End(xlUp).Row
+                    For i = 2 To YCLastRow
+                        If Cells(i, "K").Value = Application.WorksheetFunction.Max(WS.Range("K2:K" & YCLastRow)) Then
+                            Cells(2, Column + 15).Value = Cells(i, "I").Value
+                            Cells(2, Column + 16).Value = Cells(i, "K").Value
+                            Cells(2, Column + 16).NumberFormat = "0.00%"
+                        ElseIf Cells(i, "K").Value = Application.WorksheetFunction.Min(WS.Range("K2:K" & YCLastRow)) Then
+                            Cells(3, Column + 15).Value = Cells(i, "I").Value
+                            Cells(3, Column + 16).Value = Cells(i, "K").Value
+                            Cells(3, Column + 16).NumberFormat = "0.00%"
+                        ElseIf Cells(i, Column + 11).Value = Application.WorksheetFunction.Max(WS.Range("L2:L" & YCLastRow)) Then
+                            Cells(4, Column + 15).Value = Cells(i, "I").Value
+                            Cells(4, Column + 16).Value = Cells(i, Column + 11).Value
+                        End If
+                Next i
+                    PCLastRow = WS.Cells(Rows.Count, "J").End(xlUp).Row
+                    For i = 2 To PCLastRow
+                        If (Cells(i, Column + 9).Value > 0 Or Cells(i, Column + 9).Value = 0) Then
+                            Cells(i, Column + 9).Interior.ColorIndex = 4
+                        ElseIf Cells(i, Column + 9).Value < 0 Then
+                            Cells(i, Column + 9).Interior.ColorIndex = 3
+                        End If
+                Next i
+                    For i = 2 To PCLastRow
+                        If (Cells(i, "K").Value > 0 Or Cells(i, "K").Value = 0) Then
+                            Cells(i, "K").Interior.ColorIndex = 4
+                        ElseIf Cells(i, "K").Value < 0 Then
+                            Cells(i, "K").Interior.ColorIndex = 3
+                        End If
+                Next i
+        Next WS
+End Sub

@@ -1,0 +1,965 @@
+VBA Code
+--------
+
+' Part I: Calculate the total after fees
+' Part II: Create an alert if the item is above budget after fees.
+' Part III: If the item is above budget, correct the price such that it would be "under budget"
+
+' ----------------------------------------------------
+
+Sub BudgetChecker()
+
+    ' Part 1
+    ' ----------------------------------------------------
+
+    ' 1. Retrieve the Price and Fees from the cells
+    Dim total As Double
+
+    ' 2. Use these values to calculate the total
+    total = Range("F3").Value * (1 + Range("H3").Value)
+    ' msgbox(total)
+
+    ' 3. Enter the total into the appropriate cell
+    Range("L3").Value = total
+
+    ' Part 2
+    ' ----------------------------------------------------
+    ' 4. Create a variable to store budget
+    Dim budget As Double
+    budget = Range("B3").Value
+    ' msgbox(budget)
+
+    ' 5. Compare using conditionals whether total is greater than or less than the budget
+    If budget > total Then
+
+        MsgBox ("Under budget")
+
+    Else
+
+        MsgBox ("Over budget")
+
+        ' Part 3
+        ' ----------------------------------------------------
+        Dim newPrice As Double
+        newPrice = budget / (1 + Range("H3").Value)
+        
+        'Use a worksheet function to round the new price down to the nearest whole dollar
+        newPrice = Application.WorksheetFunction.RoundDown(newPrice, 0)
+        
+        ' Change the price
+        Range("F3").Value = newPrice
+
+        ' Change the new total
+        Range("L3").Value = newPrice * (1 + Range("H3").Value)
+
+    End If
+
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub BudgetChecker()
+	Dim total As Double
+	total = Range("F3").Value * (1 + Range("H3").Value)
+	Range("L3").Value = total
+	Dim budget As Double
+    	budget = Range("B3").Value
+	If budget > total Then
+		MsgBox ("Under budget")
+	Else
+		MsgBox ("Over budget")
+		Dim newPrice As Double
+        	newPrice = budget / (1 + Range("H3").Value)
+		Range("F3").Value = newPrice
+		Range("L3").Value = newPrice * (1 + Range("H3").Value)
+	End If
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub forLoop()
+
+    ' Create a variable to hold the counter
+    Dim i As Integer
+
+    ' Loop through from numbers 1 through 20
+    For i = 1 To 20
+    
+        ' Iterate through the rows placing a value of 1 throughout
+        Cells(i, 1).Value = 1
+    
+        ' Iterate through the columns placing a value of 5 throughout 
+        Cells(1, i).Value = 5
+
+        ' Places increasing values based upon the variable "i" in B2 to B21
+        Cells(i + 1, 2).Value = i + 1
+    
+    ' Call the next iteration
+    Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub forLoop()
+
+Dim i As Integer
+    For i = 1 To 20
+        ' Places a value of 1 in A1 to A20
+        Cells(i, 1).Value = 1
+        ' Places a value of 5 in A1 to T1
+        Cells(1, i).Value = 5
+        ' Places increasing values based upon the variable "i" in B2 to B21
+        Cells(i + 1, 2).Value = i + 1
+    Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub loops_and_loops()
+
+    ' Loop through first 10 rows
+    For i = 1 To 10
+
+        ' Set values in column 1 to "I will eat"
+        Cells(i, 1).Value = "I will eat "
+
+        ' Set values in column 2 to the sum of the counter + 10
+        Cells(i, 2).Value = i + 10
+
+        ' Set values in column 3 to "Chicken Nuggets"
+        Cells(i, 3).Value = "Chicken Nuggets"
+
+    ' Call the next iteration
+    Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub loops_and_loops()
+	For i = 1 To 10
+		Cells(i, 1).Value = "I will eat "
+		Cells(i, 2).Value = i + 10
+		Cells(i, 3).Value = "Chicken Nuggets"
+	Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub conditional_loops()
+
+    ' Create a for loop from 1 to 10
+    For i = 1 To 10
+
+        ' Use the modulus function to determine if a number is divisible by 2 (even number)
+        If Cells(i, 1).Value Mod 2 = 0 Then
+
+            ' Enter "Even Row" the adjacent cell
+            Cells(i, 2).Value = "Even Row"
+            
+        ' If the number is not divisible by 2 (odd number)
+        Else
+
+            ' Enter "Even Row" the adjacent cell
+            Cells(i, 2).Value = "Odd Row"
+            
+        ' Close the If/Else Statement
+        End If
+
+    Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub conditional_loops()
+	For i = 1 To 10
+		If Cells(i, 1).Value Mod 2 = 0 Then
+			Cells(i, 2).Value = "Even Row"
+		Else
+			Cells(i, 2).Value = "Odd Row"
+		End If
+	Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub modulo()
+
+    ' Remainder of 0
+    Cells(2, 1).Value = 4 Mod 2
+    
+    ' Remainder of 1
+    Cells(3, 1).Value = 5 Mod 4
+    
+    ' Remainder of 3
+    Cells(4, 1).Value = 11 Mod 8
+    
+    ' Remainder of 2
+    Cells(5, 1).Value = 23 Mod 7
+    
+    ' Remainder of 5
+    Cells(6, 1).Value = 24 Mod 19
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub modulo()
+	Cells(2, 1).Value = 4 Mod 2
+	Cells(3, 1).Value = 5 Mod 4
+	Cells(4, 1).Value = 11 Mod 8
+	Cells(5, 1).Value = 23 Mod 7
+	Cells(6, 1).Value = 24 Mod 19
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub FizzBuzz()
+    ' Loop through the values in Column 1
+    For i = 2 To 100
+
+        'Set cell value to variable
+        num = Cells(i, 1).Value
+
+
+        ' Check if the number is divisible by 3 and 5....
+        If (num Mod 3 = 0 And num Mod 5 = 0) Then
+
+            ' If so, print Fizzbuzz
+            Cells(i, 2).Value = "Fizzbuzz"
+
+        ' Check if the number is divisible by just 3...
+        ElseIf (num Mod 3 = 0) Then
+
+            ' If so, print "Fizz"
+            Cells(i, 2).Value = "Fizz"
+
+        ' Check if the number is divisible by just 5...
+        ElseIf (num Mod 5 = 0) Then
+
+            ' If so, print "Buzz"
+            Cells(i, 2).Value = "Buzz"
+
+        End If
+
+    Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub FizzBuzz()
+	For i = 2 To 100
+		num = Cells(i, 1).Value
+		If (num Mod 3 = 0 And num Mod 5 = 0) Then
+			Cells(i, 2).Value = "Fizzbuzz"
+		ElseIf (num Mod 3 = 0) Then
+			Cells(i, 2).Value = "Fizz"
+		ElseIf (num Mod 5 = 0) Then
+			Cells(i, 2).Value = "Buzz"
+		End If
+	Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub lotto_winner()
+
+    ' Create variables to hold winners. (Use "Long" because the numbers exceed the limit for integers)
+    Dim first_place As Long
+    Dim second_place As Long
+    Dim third_place As Long
+    Dim runner1 As Long
+    Dim runner2 As Long
+    Dim runner3 As Long
+
+    ' Establish the winning ticket numbers
+    first_place = 3957481
+    second_place = 5865187
+    third_place = 2817729
+
+    ' Establish the runner-up numbers
+    runner1 = 2275339
+    runner2 = 5868182
+    runner3 = 1841402
+
+    ' Loop through each of the lotto tickets
+    For i = 1 To 1001
+
+        ' Check if the lotto number matches the first place winner...
+        If Cells(i, 3).Value = first_place Then
+
+            ' If so, create a message box specifying the first place win
+            MsgBox " Congratulations " + Cells(i, 1).Value
+
+            ' Retrieve the values associated with the winner and enter them into the winner's box.
+            Cells(2, 6).Value = Cells(i, 1).Value
+            Cells(2, 7).Value = Cells(i, 2).Value
+            Cells(2, 8).Value = first_place
+
+        ' Check if the lotto number matches the second place winner...
+        ElseIf Cells(i, 3).Value = second_place Then
+            
+            ' Retrieve the values associated with the winner and enter them into the winner's box.
+            Cells(3, 6).Value = Cells(i, 1).Value
+            Cells(3, 7).Value = Cells(i, 2).Value
+            Cells(3, 8).Value = second_place
+
+        ' Check if the lotto number matches the second place winner...
+        ElseIf Cells(i, 3).Value = third_place Then
+           
+            ' Retrieve the values associated with the winner and enter them into the winner's box.
+            Cells(4, 6).Value = Cells(i, 1).Value
+            Cells(4, 7).Value = Cells(i, 2).Value
+            Cells(4, 8).Value = third_place
+
+        ' Ends this series of IF/ELSE conditionals
+        End If
+
+    Next i
+
+    ' Loop through the lotto tickets a second time to find the first instance of a "runner-up" winner
+
+    For i = 1 To 1001
+
+        ' BONUS: Check for runner ups with an OR operator
+        If Cells(i, 3).Value = runner1 Or Cells(i, 3).Value = runner2 Or Cells(i, 3).Value = runner3 Then
+            
+            ' Retrieve the values associated with the winner and enter them into the winner's box.
+            runner_up = Cells(i, 3).Value
+            Cells(5, 6).Value = Cells(i, 1).Value
+            Cells(5, 7).Value = Cells(i, 2).Value
+            Cells(5, 8).Value = runner_up
+
+            ' If first match is found, exit the for loop
+            Exit For
+
+        End If
+
+    Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub lotto_winner()
+	Dim first_place As Long
+   	Dim second_place As Long
+    	Dim third_place As Long
+    	Dim runner1 As Long
+    	Dim runner2 As Long
+    	Dim runner3 As Long
+	first_place = 3957481
+    	second_place = 5865187
+    	third_place = 2817729
+	runner1 = 2275339
+    	runner2 = 5868182
+    	runner3 = 1841402
+	For i = 1 To 1001
+		If Cells(i, 3).Value = first_place Then
+			MsgBox " Congratulations " + Cells(i, 1).Value
+			Cells(2, 6).Value = Cells(i, 1).Value
+            		Cells(2, 7).Value = Cells(i, 2).Value
+            		Cells(2, 8).Value = first_place
+		ElseIf Cells(i, 3).Value = second_place Then
+			Cells(3, 6).Value = Cells(i, 1).Value
+            		Cells(3, 7).Value = Cells(i, 2).Value
+            		Cells(3, 8).Value = second_place
+		ElseIf Cells(i, 3).Value = third_place Then
+			Cells(4, 6).Value = Cells(i, 1).Value
+            		Cells(4, 7).Value = Cells(i, 2).Value
+            		Cells(4, 8).Value = third_place
+		End If
+	Next i
+	For i = 1 To 1001
+		If Cells(i, 3).Value = runner1 Or Cells(i, 3).Value = runner2 Or Cells(i, 3).Value = runner3 Then
+			runner_up = Cells(i, 3).Value
+            		Cells(5, 6).Value = Cells(i, 1).Value
+            		Cells(5, 7).Value = Cells(i, 2).Value
+            		Cells(5, 8).Value = runner_up
+			Exit For
+		End If
+	Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+' Nested For Loop
+
+Sub ClassScanner()
+    
+    Dim TargetStudent As String
+    
+    ' Loop through the rows
+    For i = 1 To 3
+
+        ' Loop through the columns
+        For j = 1 To 5
+
+            ' Print the Student Name
+            MsgBox ("Row: " & i & " Column: " & j & " | " & Cells(i, j).Value)
+
+        Next j
+
+    Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub ClassScanner()
+	Dim TargetStudent As String
+	For i = 1 To 3
+		For j = 1 To 5
+			MsgBox ("Row: " & i & " Column: " & j & " | " & Cells(i, j).Value)
+		Next j
+	Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+' Part I: Count the number of times Cat Token appears
+' Part II: Each time you find a Cat Token replace it with Dogecoin
+' Part III: You have a max amount of Shiba Inu and Dogecoin, utilize no more than what's provided.
+'           If there are still instances of Cat Token left, provide the user with a message stating: "Oh no! We still have some Cat Token..."
+
+Sub CryptoKennel()
+
+  ' PART 3
+  ' ------------------------------------------------
+  ' Create a variable to hold the number of Cat Token
+  Dim CatCount As Integer
+
+  ' Create a variable to hold the number of Shiba Inu and Dogecoin
+  Dim ShibaCount As Integer
+  Dim DogeCount As Integer
+
+  ' Set the value of Shiba Inu and Dogecoin counters
+  ShibaCount = Range("I2").Value
+  DogeCount = Range("I5").Value
+
+  ' Set the initial value for the CatCount to 0
+  CatCount = 0
+
+  ' Loop through all rows
+  For i = 1 To 6
+
+    ' Loop through all columns
+    For j = 1 To 7
+
+      ' If the value of a cell is equal to Cat Token
+      If Cells(i, j).Value = "Cat Token" Then
+
+        ' Add to the CatCounter
+        CatCount = CatCount + 1
+
+        ' Check if we have Shiba Inu available
+        If (ShibaCount > 0) Then
+
+          ' Replace the Cat Token with Shiba Inu
+          Cells(i, j).Value = "Shiba Inu"
+
+          ' Subtract from the Shiba Inu Count
+          ShibaCount = ShibaCount - 1
+
+        ' Check if we have Dogecoin available
+        ElseIf (DogeCount > 0) Then
+
+          ' Replace the Cat Token with Dogecoin
+          Cells(i, j).Value = "Dogecoin"
+
+          ' Subtract from the Dogecoin Count
+          DogeCount = DogeCount - 1
+
+        End If
+
+      End If
+
+    Next j
+
+  Next i
+
+  ' Show the number of Cat Token found
+  MsgBox (CatCount & " Cat Token Found")
+
+  ' Create the final message if we still have Cat Token
+  If (Range("I2").Value + Range("I5").Value < CatCount) Then
+
+    MsgBox ("Oh no! We still have some Cat Token... ")
+
+  End If
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub CryptoKennel()
+	Dim CatCount As Integer
+	Dim ShibaCount As Integer
+  	Dim DogeCount As Integer
+	ShibaCount = Range("I2").Value
+  	DogeCount = Range("I5").Value
+	CatCount = 0
+	For i = 1 To 6
+		For j = 1 To 7
+			If Cells(i, j).Value = "Cat Token" Then
+				CatCount = CatCount + 1
+				If (ShibaCount > 0) Then
+					Cells(i, j).Value = "Shiba Inu"
+					ShibaCount = ShibaCount - 1
+				ElseIf (DogeCount > 0) Then
+					Cells(i, j).Value = "Dogecoin"
+					DogeCount = DogeCount - 1
+				End If
+			End If
+		Next j
+	Next i
+	MsgBox (CatCount & " Cat Token Found")
+	If (Range("I2").Value + Range("I5").Value < CatCount) Then
+		MsgBox ("Oh no! We still have some Cat Token... ")
+	End If
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub QuickLoop()
+	For i = 1 To 3
+		MsgBox(Cells(i, 1))
+	Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub QuickLoop()
+	For i = 1 To 4
+		For j = 1 To 3
+			MsgBox(Cells(i, j))
+		Next j	
+	Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub StarCounter()
+
+    'Create a variable to hold the StarCounter. We will repeadtedly use this.
+    Dim StarCounter As Integer
+    
+    
+    'Loop through each row
+    For i = 2 To 51
+    
+        'initially set the StarCounter to be 0 for each row
+        StarCounter = 0
+        
+        'While in each row, loop through each star column
+        For j = 4 To 8
+        
+            'If a column contains the word "Full-Star"
+            If (Cells(i, j).Value = "Full-Star") Then
+            
+                'Add 1 to the StarCounter
+                StarCounter = StarCounter + 1
+            
+            End If
+        
+        Next j
+        
+        'Once we've completed all rows, print the value in the total column
+        Cells(i, 9).Value = StarCounter
+        
+    Next i
+    
+    
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub StarCounter()
+    Dim StarCounter As Integer
+    For i = 2 To 51
+        StarCounter = 0
+        For j = 4 To 8
+            If (Cells(i, j).Value = "Full-Star") Then
+                StarCounter = StarCounter + 1
+            End If
+        Next j
+        Cells(i, 9).Value = StarCounter
+    Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub formatter()
+
+  ' Set the Font colour to Red
+  Range("A1").Font.ColorIndex = 3
+
+  ' Set the Cell Colours to Red
+  Range("A2:A5").Interior.ColorIndex = 3
+
+  ' Set the Font Colour to Green
+  Range("B1").Font.ColorIndex = 4
+
+  ' Set the Cell Colours to Green
+  Range("B2:B5").Interior.ColorIndex = 4
+
+  ' Set the Colour Index to Blue
+  Range("C1").Font.ColorIndex = 5
+
+  ' Set the Cell Colours to Blue
+  Range("C2:C5").Interior.ColorIndex = 5
+
+  ' Set the Colour Index to Magenta
+  Range("D1").Font.ColorIndex = 7
+
+  ' Set the Cell Colours to Magenta
+  Range("D2:D5").Interior.ColorIndex = 7
+
+  ' See this website for color guides: http://dmcritchie.mvps.org/excel/colors.htm
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub formatter()
+  Range("A1").Font.ColorIndex = 3
+  Range("A2:A5").Interior.ColorIndex = 3
+  Range("B1").Font.ColorIndex = 4
+  Range("B2:B5").Interior.ColorIndex = 4
+  Range("C1").Font.ColorIndex = 5
+  Range("C2:C5").Interior.ColorIndex = 5
+  Range("D1").Font.ColorIndex = 7
+  Range("D2:D5").Interior.ColorIndex = 7
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub Reset_Button():
+
+  ' Pass the previous grade to the Last Grade row
+  Cells(12, 2).Value = Cells(2, 2).Value
+  Cells(12, 3).Value = Cells(2, 3).Value
+  Cells(12, 4).Value = Cells(2, 4).Value
+
+  ' Empty out the current grade and remember to set the colour back to default
+  Cells(2, 2).Value = ""
+  Cells(2, 3).Value = ""
+  Cells(2, 3).Interior.ColorIndex = 0
+  Cells(2, 4).Value = ""
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub Reset_Button():
+  Cells(12, 2).Value = Cells(2, 2).Value
+  Cells(12, 3).Value = Cells(2, 3).Value
+  Cells(12, 4).Value = Cells(2, 4).Value
+  Cells(2, 2).Value = ""
+  Cells(2, 3).Value = ""
+  Cells(2, 3).Interior.ColorIndex = 0
+  Cells(2, 4).Value = ""
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+' This solution uses a trick of adding the row and column numbers:
+' You can Mod that sum and use it to determine the colour
+Sub CheckerboardAlternateSolution()
+    Dim r, c As Integer
+    
+    For r = 1 To 8
+        For c = 1 To 8
+            If (r + c) Mod 2 = 0 Then
+                Cells(r, c).Interior.ColorIndex = 1 ' Black
+            Else
+                Cells(r, c).Interior.ColorIndex = 3 ' Red
+            End If
+        Next c
+    Next r
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub CheckerboardAlternateSolution()
+    Dim r, c As Integer
+    For r = 1 To 8
+        For c = 1 To 8
+            If (r + c) Mod 2 = 0 Then
+                Cells(r, c).Interior.ColorIndex = 1 ' Black
+            Else
+                Cells(r, c).Interior.ColorIndex = 3 ' Red
+            End If
+        Next c
+    Next r
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub NextCells()
+
+  ' Set a variable for specifying the column of interest
+  Dim column As Integer
+  column = 1
+
+  ' Loop through rows in the column
+  For i = 2 To 6
+
+    ' Searches for when the value of the next cell is different than that of the current cell
+    If Cells(i + 1, column).Value <> Cells(i, column).Value Then
+
+      ' Message Box the value of the current cell and value of the next cell
+      MsgBox (Cells(i, column).Value & " and then " & Cells(i + 1, column).Value)
+
+    End If
+
+  Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub NextCells()
+  Dim column As Integer
+  column = 1
+  For i = 2 To 6
+    If Cells(i + 1, column).Value <> Cells(i, column).Value Then
+      MsgBox (Cells(i, column).Value & " and then " & Cells(i + 1, column).Value)
+    End If
+  Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sub credit_card()
+
+  ' Set an initial variable for holding the brand name
+  Dim Brand_Name As String
+
+  ' Set an initial variable for holding the total per credit card brand
+  Dim Brand_Total As Double
+  Brand_Total = 0
+
+  ' Keep track of the location for each credit card brand in the summary table
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+
+  ' Loop through all credit card purchases
+  For i = 2 To 101
+
+    ' Check if we are still within the same credit card brand, if it is not...
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+      ' Set the Brand name
+      Brand_Name = Cells(i, 1).Value
+
+      ' Add to the Brand Total
+      Brand_Total = Brand_Total + Cells(i, 3).Value
+
+      ' Print the Credit Card Brand in the Summary Table
+      Range("G" & Summary_Table_Row).Value = Brand_Name
+
+      ' Print the Brand Amount to the Summary Table
+      Range("H" & Summary_Table_Row).Value = Brand_Total
+
+      ' Add one to the summary table row
+      Summary_Table_Row = Summary_Table_Row + 1
+      
+      ' Reset the Brand Total
+      Brand_Total = 0
+
+    ' If the cell immediately following a row is the same brand...
+    Else
+
+      ' Add to the Brand Total
+      Brand_Total = Brand_Total + Cells(i, 3).Value
+
+    End If
+
+  Next i
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub credit_card()
+  Dim Brand_Name As String
+  Dim Brand_Total As Double
+  Brand_Total = 0
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+  For i = 2 To 101
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+      Brand_Name = Cells(i, 1).Value
+      Brand_Total = Brand_Total + Cells(i, 3).Value
+      Range("G" & Summary_Table_Row).Value = Brand_Name
+      Range("H" & Summary_Table_Row).Value = Brand_Total
+      Summary_Table_Row = Summary_Table_Row + 1
+      Brand_Total = 0
+    Else
+      Brand_Total = Brand_Total + Cells(i, 3).Value
+    End If
+  Next i
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+' Steps:
+' ----------------------------------------------------------------------------
+
+' Part I:
+
+' 1. Extract the number before the phrase "_census_data" to figure out the year.
+' 2. Add the year to the first column of each spreadsheet.
+' 3. Split the "Place" column into "County" and "State".
+' 4. Convert the household and per capita income columns to currency values for all cells.
+
+
+Sub Census_pt1()
+
+    ' --------------------------------------------
+    ' LOOP THROUGH ALL SHEETS
+    ' --------------------------------------------
+    For Each ws In Worksheets
+
+        ' --------------------------------------------
+        ' INSERT THE YEAR
+        ' --------------------------------------------
+
+        ' Create a Variable to Hold File Name, Last Row, and Year
+        Dim WorksheetName As String
+
+        ' Determine the Last Row
+        LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+        ' Grabbed the WorksheetName
+        WorksheetName = ws.Name
+        'MsgBox WorksheetName
+
+        ' Split the WorksheetName
+        CensusYear = Split(WorksheetName, "_")
+        'MsgBox CensusYear(0)
+
+        ' Add a Column for the Year
+        ws.Range("A1").EntireColumn.Insert
+
+        ' Add the word Year to the First Column Header
+        ws.Cells(1, 1).Value = "Year"
+
+        ' Add the Year to all rows
+        ws.Range("A2:A" & LastRow) = CensusYear(0)
+
+        ' --------------------------------------------
+        ' SPLIT COUNTY AND STATE
+        ' --------------------------------------------
+
+        ' Add the State Column after County
+        ws.Range("C1").EntireColumn.Insert
+        
+        ' Rename Place to County
+        ws.Cells(1, 2).Value = "County"
+        
+        ' Label State Column
+        ws.Cells(1, 3).Value = "State"
+
+        ' Split County and State and store values in appropriate
+        ' column by looping through and renaming each
+        For i = 2 To LastRow
+            CountyState = ws.Cells(i, 2).Value
+            CSSplit = Split(CountyState, ", ")
+            'MsgBox CSSplit(1)
+            ws.Cells(i, 2).Value = CSSplit(0)
+            ws.Cells(i, 3).Value = CSSplit(1)
+            ' MsgBox Cells(i, 2)
+            ' MsgBox CSSplit(0)
+
+        Next i
+
+        ' --------------------------------------------
+        ' CORRECT THE CURRENCY FORMAT
+        ' --------------------------------------------
+
+        ' Add the currency
+        For i = 2 To LastRow
+
+            ' For columns Household and Per Capita Income only
+            For j = 6 To 7
+
+                ws.Cells(i, j).Style = "Currency"
+
+            Next j
+
+        Next i
+
+    ' --------------------------------------------
+    ' FIXES COMPLETE
+    ' --------------------------------------------
+    Next ws
+
+    MsgBox ("Fixes Complete")
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub Census_pt1()
+    For Each ws In Worksheets
+        Dim WorksheetName As String
+        LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+        WorksheetName = ws.Name
+        CensusYear = Split(WorksheetName, "_")
+        ws.Range("A1").EntireColumn.Insert
+        ws.Cells(1, 1).Value = "Year"
+        ws.Range("A2:A" & LastRow) = CensusYear(0)
+        ws.Range("C1").EntireColumn.Insert
+        ws.Cells(1, 2).Value = "County"
+        ws.Cells(1, 3).Value = "State"
+        For i = 2 To LastRow
+            CountyState = ws.Cells(i, 2).Value
+            CSSplit = Split(CountyState, ", ")
+            ws.Cells(i, 2).Value = CSSplit(0)
+            ws.Cells(i, 3).Value = CSSplit(1)
+        Next i
+        For i = 2 To LastRow
+            For j = 6 To 7
+                ws.Cells(i, j).Style = "Currency"
+            Next j
+        Next i
+    Next ws
+    MsgBox ("Fixes Complete")
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+' Steps:
+' ----------------------------------------------------------------------------
+
+' Part II:
+
+' 1. Loop through every worksheet and select the year contents.
+' 2. Copy the year contents and paste it into the Combined_Data tab
+
+
+Sub Census_pt2()
+
+    ' Add a sheet named "Combined Data"
+    Sheets.Add.Name = "Combined_Data"
+    'move created sheet to be first sheet
+    Sheets("Combined_Data").Move Before:=Sheets(1)
+    ' Specify the location of the combined sheet
+    Set combined_sheet = Worksheets("Combined_Data")
+
+    ' Loop through all sheets
+    For Each ws In Worksheets
+
+        ' Find the last row of the combined sheet after each paste
+        ' Add 1 to get first empty row
+        lastRow = combined_sheet.Cells(Rows.Count, "A").End(xlUp).Row + 1
+
+        ' Find the last row of each worksheet
+        ' Subtract one to return the number of rows without header
+        lastRowYear = ws.Cells(Rows.Count, "A").End(xlUp).Row - 1
+
+        ' Copy the contents of each year sheet into the combined sheet
+        combined_sheet.Range("A" & lastRow & ":K" & ((lastRowYear - 1) + lastRow)).Value = ws.Range("A2:K" & (lastRowYear + 1)).Value
+
+    Next ws
+
+    ' Copy the headers from sheet 1
+    combined_sheet.Range("A1:K1").Value = Sheets(2).Range("A1:K1").Value
+    
+    ' Autofit to display data
+    combined_sheet.Columns("A:K").AutoFit
+
+End Sub
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sub Census_pt2()
+    Sheets.Add.Name = "Combined_Data"
+    Sheets("Combined_Data").Move Before:=Sheets(1)
+    Set combined_sheet = Worksheets("Combined_Data")
+    For Each ws In Worksheets
+        lastRow = combined_sheet.Cells(Rows.Count, "A").End(xlUp).Row + 1
+        lastRowYear = ws.Cells(Rows.Count, "A").End(xlUp).Row - 1
+        combined_sheet.Range("A" & lastRow & ":K" & ((lastRowYear - 1) + lastRow)).Value = ws.Range("A2:K" & (lastRowYear + 1)).Value
+    Next ws
+    combined_sheet.Range("A1:K1").Value = Sheets(2).Range("A1:K1").Value
+    combined_sheet.Columns("A:K").AutoFit
+End Sub
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
